@@ -1,0 +1,22 @@
+{
+  "name": "buckle",
+  "version": "1.0.0",
+  "description": "CSS Framework Development Tool",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trezar001/buckle.git"
+  },
+  "author": "trezar001",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trezar001/buckle/issues"
+  },
+  "homepage": "https://github.com/trezar001/buckle#readme",
+  "dependencies": {
+    "electron": "^8.2.3"
+  }
+}
