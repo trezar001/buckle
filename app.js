@@ -4,7 +4,7 @@ const { app, BrowserWindow } = electron;
 
 let mainWindow;
 
-//listee for app to be ready
+//listen for app to be ready
 app.on('ready',function(){
 
     mainWindow = new BrowserWindow({
@@ -14,5 +14,10 @@ app.on('ready',function(){
           nodeIntegration: true
         }
     })
+
+    mainWindow.loadFile('index.html')
 })
+
+
+
 
