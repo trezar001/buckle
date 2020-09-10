@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Our own CSS styles -->
     <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 <body>
     <div class="row">
+        <!-- This is where the CSS framework component list goes -->
         <div class="col s4 grey lighten-1" style="height: 600px">
             <ul class="collection">
                 <li class="collection-item component">Badges</li>
@@ -27,15 +29,18 @@
                 <li class="collection-item component">Preloader</li>
               </ul>
         </div>
+        <!-- This is where the code for the selected component goes -->
         <div class="col s4 grey lighten-3" style="height: 600px">
             <h4>Code</h4>
             <p id="component-description"></p>
         </div>
+        <!-- This is where the visuals for the selected component goes -->
         <div class="col s4 grey lighten-1" style="height: 600px">
             <h4>Output</h4>
             <p id="component-output"></p>
         </div>
     </div>
+    <!-- Our own javascript files will go here -->
     <script src=action.js></script>
 </body>
 </html>
