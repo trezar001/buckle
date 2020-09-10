@@ -3,17 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <p>This is a test...</p>
-    <form action="nothing">
-        <label>Name</label>
-        <input type="text" id="username" placeholder="Name">
-        <label>Password</label>
-        <input type="text" id="password" placeholder="Password">
-        <button id=btn action="submit">Submit Me!</button>
-    </form>
+    <div class="row">
+        <div class="col s4 grey lighten-1" style="height: 600px">
+            <ul class="collection">
+                <li class="collection-item component">Badges</li>
+                <li class="collection-item component">Buttons</li>
+                <li class="collection-item component">Breadcrumbs</li>
+                <li class="collection-item component">Cards</li>
+                <li class="collection-item component">Collections</li>
+                <li class="collection-item component">Floating Action Button</li>
+                <li class="collection-item component">Footer</li>
+                <li class="collection-item component">Icons</li>
+                <li class="collection-item component">Navbar</li>
+                <li class="collection-item component">Pagination</li>
+                <li class="collection-item component">Preloader</li>
+              </ul>
+        </div>
+        <div class="col s4 grey lighten-3" style="height: 600px">
+            <h4>Code</h4>
+            <p id="component-description"></p>
+        </div>
+        <div class="col s4 grey lighten-1" style="height: 600px">
+            <h4>Output</h4>
+            <p id="component-output"></p>
+        </div>
+    </div>
+    <script src=action.js></script>
 </body>
 </html>
