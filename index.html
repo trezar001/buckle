@@ -27,8 +27,8 @@
 <body>
     <div style="height: 10vh; margin-bottom: 0;">
             <ul id="dropdown1" class="dropdown-content">
-                <li><a href="#!">one</a></li>
-                <li><a href="#!">two</a></li>
+                <li><a href="#!" id="materialize">materialize</a></li>
+                <li><a href="#!" id="bootstrap">bootstrap</a></li>
                 <li class="divider"></li>
                 <li><a href="#!">three</a></li>
             </ul>
@@ -49,18 +49,7 @@
         <div class="row" style="height: 90vh">
             <!-- This is where the CSS framework component list goes -->
             <div class="col s2 blue lighten-4" style="height: 100%">
-                <ul class="collection">
-                    <li class="collection-item component">Badges</li>
-                    <li class="collection-item component">Buttons</li>
-                    <li class="collection-item component">Breadcrumbs</li>
-                    <li class="collection-item component">Cards</li>
-                    <li class="collection-item component">Collections</li>
-                    <li class="collection-item component">Floating Action Button</li>
-                    <li class="collection-item component">Footer</li>
-                    <li class="collection-item component">Icons</li>
-                    <li class="collection-item component">Navbar</li>
-                    <li class="collection-item component">Pagination</li>
-                    <li class="collection-item component">Preloader</li>
+                <ul class="collection" id="collection">
                 </ul>
             </div>
             <!-- This is where the code for the selected component goes -->
@@ -76,7 +65,7 @@
             <!-- This is where the visuals for the selected component goes -->
             <div class="col s5 blue lighten-4" style="height: 100%">
                 <h4 class="grey-text lighten-2 center" style="padding-bottom: 5%">Output</h4>
-                <div id="component-output" class="center"></div>
+                <iframe src="materialize.html" id="framework" name="myFrame"></iframe>
             </div>
         </div>
         <!-- Our own javascript files will go here -->
