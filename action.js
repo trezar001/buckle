@@ -34,7 +34,7 @@ bootstrapbtn.onclick = ()=> {
 
 function generate(framework){
 
-    display.postMessage({'action': 'switch', 'javascript': framework.javascript, 'css': framework.css})
+    display.postMessage({'action': 'switch', 'javascript': framework.javascript, 'css': framework.css, 'resources': framework.resources})
     collection.innerHTML = ''
     editor.session.setValue('')
 

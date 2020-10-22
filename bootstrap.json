@@ -1,18 +1,47 @@
 {   
     "javascript": "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js",
     "css": "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css",
+    "resources": [],
     "components": [
         {
-            "name": "Badges",
-            "code": "<div class=\"collection\">\n\t<a href=\"#!\" class=\"collection-item\"><span class=\"badge\">1</span>Alan</a>\n\t<a href=\"#!\" class=\"collection-item\"><span class=\"new badge\">4</span>Alan</a>\n\t<a href=\"#!\" class=\"collection-item\">Alan</a>\n\t<a href=\"#!\" class=\"collection-item\"><span class=\"badge\">14</span>Alan</a>\n</div>"
+            "name": "Alerts",
+            "code": "<div class=\"alert alert-primary\" role=\"alert\">\n\tA simple primary alert—check it out!\n\t</div>\n\t<div class=\"alert alert-secondary\" role=\"alert\">\n\t\tA simple secondary alert—check it out!\n\t\t</div>\n\t\t<div class=\"alert alert-success\" role=\"alert\">\n\t\t\tA simple success alert—check it out!\n\t\t\t</div>\n\t\t\t<div class=\"alert alert-danger\" role=\"alert\">\n\t\t\t\tA simple danger alert—check it out!\n\t\t\t\t</div>\n\t\t\t\t<div class=\"alert alert-warning\" role=\"alert\">\n\t\t\t\t\tA simple warning alert—check it out!\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class=\"alert alert-info\" role=\"alert\">\n\t\t\t\t\t\tA simple info alert—check it out!\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t<div class=\"alert alert-light\" role=\"alert\">\n\t\t\t\t\t\t\tA simple light alert—check it out!\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"alert alert-dark\" role=\"alert\">\n\t\t\t\t\t\t\t\tA simple dark alert—check it out!\n\t\t\t\t\t\t\t\t</div>"
         },
         {
-            "name": "Buttons",
-            "code": "<a class=\"waves-effect waves-light btn\">button</a>\n<a class=\"waves-effect waves-light btn\"><i class=\"material-icons left\">cloud</i>button</a>\n<a class=\"waves-effect waves-light btn\"><i class=\"material-icons right\">cloud</i>button</a>"
+            "name": "Badges",
+            "code": "<h1>Example heading <span class=\"badge badge-secondary\">New</span></h1>\n<h2>Example heading <span class=\"badge badge-secondary\">New</span></h2>\n<h3>Example heading <span class=\"badge badge-secondary\">New</span></h3>\n<h4>Example heading <span class=\"badge badge-secondary\">New</span></h4>\n<h5>Example heading <span class=\"badge badge-secondary\">New</span></h5>\n<h6>Example heading <span class=\"badge badge-secondary\">New</span></h6>"
         },
         {
             "name": "Breadcrumbs",
             "code": "<nav aria-label=\"breadcrumb\">\n\t<ol class=\"breadcrumb\">\n\t<li class=\"breadcrumb-item active\" aria-current=\"page\">Home</li>\n</ol>\n</nav>\n\n<nav aria-label=\"breadcrumb\">\n\t<ol class=\"breadcrumb\">\n\t\t<li class=\"breadcrumb-item\"><a href=\"#\">Home</a></li>\n\t<li class=\"breadcrumb-item active\" aria-current=\"page\">Library</li>\n</ol>\n</nav>\n\n<nav aria-label=\"breadcrumb\">\n\t<ol class=\"breadcrumb\">\n\t\t<li class=\"breadcrumb-item\"><a href=\"#\">Home</a></li>\n\t\t<li class=\"breadcrumb-item\"><a href=\"#\">Library</a></li>\n\t<li class=\"breadcrumb-item active\" aria-current=\"page\">Data</li>\n</ol>\n</nav>"
+        },
+        {
+            "name": "Buttons",
+            "code": "<button type=\"button\" class=\"btn btn-primary\">Primary</button>\n<button type=\"button\" class=\"btn btn-secondary\">Secondary</button>\n<button type=\"button\" class=\"btn btn-success\">Success</button>\n<button type=\"button\" class=\"btn btn-danger\">Danger</button>\n<button type=\"button\" class=\"btn btn-warning\">Warning</button>\n<button type=\"button\" class=\"btn btn-info\">Info</button>\n<button type=\"button\" class=\"btn btn-light\">Light</button>\n<button type=\"button\" class=\"btn btn-dark\">Dark</button>\n\n<button type=\"button\" class=\"btn btn-link\">Link</button>"
+        },
+        {
+            "name": "Button Group",
+            "code": "<div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">\n<button type=\"button\" class=\"btn btn-secondary\">Left</button>\n<button type=\"button\" class=\"btn btn-secondary\">Middle</button>\n<button type=\"button\" class=\"btn btn-secondary\">Right</button>\n</div>"
+        },
+        {
+            "name": "Card",
+            "code": "<div class=\"card\" style=\"width: 18rem;\">\n\t<img src=\"...\" class=\"card-img-top\" alt=\"...\">\n\t\t<div class=\"card-body\">\n\t\t\t<h5 class=\"card-title\">Card title</h5>\n\t\t<p class=\"card-text\">Some quick example text to build on the card title and make up the bulk of the card's content.</p>\n\t\t<a href=\"#\" class=\"btn btn-primary\">Go somewhere</a>\n\t</div>\n</div>"
+        },
+        {
+            "name": "Carousel",
+            "code": "<div id=\"carouselExampleSlidesOnly\" class=\"carousel slide\" data-ride=\"carousel\">\n\t<div class=\"carousel-inner\">\n\t\t<div class=\"carousel-item active\">\n\t\t\t<img src=\"...\" class=\"d-block w-100\" alt=\"...\">\n\t\t\t</div>\n\t\t\t<div class=\"carousel-item\">\n\t\t\t\t<img src=\"...\" class=\"d-block w-100\" alt=\"...\">\n\t\t\t\t</div>\n\t\t\t\t<div class=\"carousel-item\">\n\t\t\t\t\t<img src=\"...\" class=\"d-block w-100\" alt=\"...\">\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>"
+        },
+        {
+            "name": "Collapse",
+            "code": "<p>\n\t<a class=\"btn btn-primary\" data-toggle=\"collapse\" href=\"#collapseExample\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseExample\">\n\t\tLink with href\n\t\t</a>\n\t\t<button class=\"btn btn-primary\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapseExample\" aria-expanded=\"false\" aria-controls=\"collapseExample\">\n\t\t\tButton with data-target\n\t\t\t</button>\n\t\t</p>\n\t\t<div class=\"collapse\" id=\"collapseExample\">\n\t\t\t<div class=\"card card-body\">\n\t\t\t\tAnim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.\n\t\t\t\t</div>\n\t\t\t</div>"
+        },
+        {
+            "name": "Dropdowns",
+            "code": "<div class=\"dropdown\">\n\t<button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n\t\tDropdown button\n\t\t</button>\n\t\t<div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n\t\t\t<a class=\"dropdown-item\" href=\"#\">Action</a>\n\t\t\t<a class=\"dropdown-item\" href=\"#\">Another action</a>\n\t\t\t<a class=\"dropdown-item\" href=\"#\">Something else here</a>\n\t\t</div>\n\t</div>"
+        },
+        {
+            "name": "Forms",
+            "code": "Copy\n\t<form>\n\t\t<div class=\"form-group\">\n\t\t<label for=\"exampleInputEmail1\">Email address</label>\n\t\t<input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\">\n\t\t<small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n\t</div>\n\t<div class=\"form-group\">\n\t<label for=\"exampleInputPassword1\">Password</label>\n\t<input type=\"password\" class=\"form-control\" id=\"exampleInputPassword1\">\n\t</div>\n\t<div class=\"form-group form-check\">\n\t\t<input type=\"checkbox\" class=\"form-check-input\" id=\"exampleCheck1\">\n\t\t<label class=\"form-check-label\" for=\"exampleCheck1\">Check me out</label>\n\t</div>\n<button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n</form>"
         }
     ]
 }
