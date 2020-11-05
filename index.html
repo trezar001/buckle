@@ -26,20 +26,19 @@
 
 <body>
     <div style="height: 10vh; margin-bottom: 0;">
-            <ul id="dropdown1" class="dropdown-content">
-                <li><a href="#!" id="materialize">materialize</a></li>
-                <li><a href="#!" id="bootstrap">bootstrap</a></li>
-                <li class="divider"></li>
-                <li><a href="#!">three</a></li>
+            <ul id="frameworkdropdown" class="dropdown-content">
+            </ul>
+            <ul id="customdropdown" class="dropdown-content">
             </ul>
             <nav  style="height: 100%;">
                 <div class="nav-wrapper deep-purple lighten-3">
                     <a href="#!" class="brand-logo" style="margin-left: 3vw;">Buckle</a>
                     <ul class="right hide-on-med-and-down">
-                        <li><a href="sass.html">Sass</a></li>
-                        <li><a href="badges.html">Components</a></li>
+                        <li><a href="#" id="create-custom">Create Custom</a></li>
+                        <li><a class="dropdown-trigger" href="#!" data-target="customdropdown">Customs<i
+                            class="material-icons right">arrow_drop_down</i></a></li>
                         <!-- Dropdown Trigger -->
-                        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i
+                        <li><a class="dropdown-trigger" href="#!" data-target="frameworkdropdown">Frameworks<i
                                     class="material-icons right">arrow_drop_down</i></a></li>
                     </ul>
                 </div>

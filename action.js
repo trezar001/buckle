@@ -1,14 +1,49 @@
-const materialize = require('./materialize.json')
-const bootstrap = require('./bootstrap.json')
+let frameworkdropdown = document.getElementById('frameworkdropdown')
+let customdropdown = document.getElementById('customdropdown')
 
-const highlighter = require('./syntax.js')
+const electron = require('electron')
+const {ipcRenderer} = electron;
+const fs = require('fs')
+
+const highlighter = require('./syntax.js');
+const { fstat } = require('fs');
 const display = document.getElementById('framework').contentWindow
 const collection = document.getElementById('collection')
 
 const materializebtn = document.getElementById('materialize')
 const bootstrapbtn = document.getElementById('bootstrap')
+const custombtn = document.getElementById('create-custom')
 
 let curComponent = null
+
+let frameworks = [];
+let customframeworks = [];
+
+fs.readdir('./frameworks', (err, files) => {
+    files.forEach(file => {
+        let path = './frameworks/' + file
+        frameworks.push(path)
+    })
+    console.log(frameworks)
+    updateDropdown(frameworks, 'frameworks')
+})
+
+fs.readdir('./custom', (err, dir) => {
+    dir.forEach(newdir => {
+        fs.readdir('./custom/'+newdir, (err, files) => {
+            files.forEach(file => {
+                let path = './custom/' + newdir + '/' + file;
+                if(path.endsWith('.json')){
+                    customframeworks.push(path)
+                }
+            })
+        })
+    });
+    
+    console.log(customframeworks)
+    updateDropdown(customframeworks, 'customs')
+})
+
 
 let editor = ace.edit("editor");
 editor.setTheme("ace/theme/chrome");
@@ -25,11 +60,8 @@ for (let i = 0; i < dropdowns.length; i++){
     M.Dropdown.init(dropdowns[i]);
 }
 
-materializebtn.onclick = ()=> {
-    generate(materialize)
-}
-bootstrapbtn.onclick = ()=> {
-    generate(bootstrap)
+custombtn.onclick = ()=> {
+    ipcRenderer.send('openmodal');
 }
 
 function generate(framework){
@@ -67,6 +99,41 @@ function generate(framework){
         })
         display.postMessage({'action': 'render', 'code': editor.session.getValue()})
 
+    })
+}
+
+function updateDropdown(frameworks, type){
+    if (type == 'customs'){
+        customdropdown.innerHTML = '';
+    }
+    else{
+        frameworkdropdown.innerHTML = '';
+    }
+    
+    frameworks.forEach(framework => {
+        let data = fs.readFileSync(framework)
+        let component = JSON.parse(data);
+ 
+        let li = document.createElement('li');
+        let a = document.createElement('a');
+        a.href = '#';
+        a.id = component.name;
+        a.appendChild(document.createTextNode(component.name));
+        li.appendChild(a);
+        li.className = 'collection-item'
+        li.onclick = (e =>{
+            generate(component)
+        })
+        let divider = document.createElement('li');
+        divider.className = 'divider';
+        if (type == 'customs'){
+            customdropdown.appendChild(li);
+            customdropdown.appendChild(divider);
+        }
+        else{
+            frameworkdropdown.appendChild(li);
+            frameworkdropdown.appendChild(divider);
+        }
     })
 }
 
