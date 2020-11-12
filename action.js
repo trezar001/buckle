@@ -1,5 +1,7 @@
 let frameworkdropdown = document.getElementById('frameworkdropdown')
 let customdropdown = document.getElementById('customdropdown')
+let componentName = document.getElementById('component-name')
+let addbtn = document.getElementById('add-btn')
 
 const electron = require('electron')
 const {ipcRenderer} = electron;
@@ -16,33 +18,28 @@ const custombtn = document.getElementById('create-custom')
 
 let curComponent = null
 
-let frameworks = [];
+let origframeworks = [];
 let customframeworks = [];
 
-fs.readdir('./frameworks', (err, files) => {
-    files.forEach(file => {
+
+fs.readdirSync('./frameworks').forEach(file => {
         let path = './frameworks/' + file
-        frameworks.push(path)
-    })
-    console.log(frameworks)
-    updateDropdown(frameworks, 'frameworks')
+        origframeworks.push(path)
 })
 
-fs.readdir('./custom', (err, dir) => {
-    dir.forEach(newdir => {
-        fs.readdir('./custom/'+newdir, (err, files) => {
-            files.forEach(file => {
-                let path = './custom/' + newdir + '/' + file;
-                if(path.endsWith('.json')){
-                    customframeworks.push(path)
-                }
-            })
-        })
-    });
-    
-    console.log(customframeworks)
-    updateDropdown(customframeworks, 'customs')
+updateDropdown(origframeworks, 'frameworks')
+
+
+fs.readdirSync('./custom').forEach(newdir => {
+    fs.readdirSync('./custom/'+newdir).forEach(file => {
+        let path = './custom/' + newdir + '/' + file;
+        if(path.endsWith('.json')){
+            customframeworks.push(path)
+        }
+    })
 })
+    
+updateDropdown(customframeworks, 'customs')
 
 
 let editor = ace.edit("editor");
@@ -64,14 +61,107 @@ custombtn.onclick = ()=> {
     ipcRenderer.send('openmodal');
 }
 
+ipcRenderer.on('refresh', () => {
+    refreshCustoms()
+    updateDropdown(customframeworks, 'customs')
+})
+
+function refreshCustoms(){
+    customframeworks = []
+    fs.readdirSync('./custom').forEach(newdir => {
+        fs.readdirSync('./custom/'+newdir).forEach(file => {
+            let path = './custom/' + newdir + '/' + file;
+            if(path.endsWith('.json')){
+                customframeworks.push(path)
+            }
+        })
+    })
+}
+
+function generateCustom(framework, path){
+    let dir = path.split('/');
+    dir.pop();
+    dir = dir.join('/')
+
+    let js = dir+'/'+framework.javascript
+    let css = dir+'/'+framework.css
+    let resources = framework.resources
+
+    display.postMessage({'action': 'switch', 'javascript': js, 'css': css, 'resources': resources})
+    collection.innerHTML = ''
+    addbtn.style = 'width: 20%; visibility: hidden;'
+    componentName.style = 'width: 75%; visibility: hidden;'
+    editor.session.setValue('')
+
+    framework.components.forEach(component =>{
+        let li = document.createElement('li');
+        li.appendChild(document.createTextNode(component.name));
+        li.className = 'collection-item component'
+        li.onclick = (e =>{
+            addbtn.style = 'width: 20%; visibility: hidden;'
+            componentName.style = 'width: 75%; visibility: hidden;'
+            curComponent = li;
+            editor.session.setValue(component.code)
+            display.postMessage({'action': 'render', 'code': editor.session.getValue()})
+        })
+        collection.appendChild(li)
+    }) 
+
+    let li = document.createElement('li');
+    let icon = document.createElement('i');
+    icon.className = 'material-icons';
+    icon.style = 'font-size: 16px';
+    icon.appendChild(document.createTextNode('add'));
+    li.appendChild(icon)
+    li.className = 'collection-item component center teal-text text-lighten-2'
+    li.onclick = (e =>{
+        editor.session.setValue('')
+        addbtn.style = 'width: 20%; visibility: visible;'
+        componentName.style = 'width: 75%; visibility: visible;'
+        addbtn.onclick = (e =>{
+            let data = fs.readFileSync(path)
+            let fw = JSON.parse(data);
+            console.log(componentName.value)
+            let component = {
+                'name': componentName.value,
+                'code': editor.session.getValue()
+            }
+            fw.components.push(component)
+            fs.writeFileSync(path, JSON.stringify(fw))
+            refreshCustoms()
+            updateDropdown(customframeworks, 'customs')
+            generateCustom(fw, path)
+        })
+    })
+    collection.appendChild(li)
+
+    render = document.getElementById('render-btn');
+    render.onclick = (e =>{
+        display.postMessage({'action': 'render', 'code': editor.session.getValue()})
+    })
+
+    refresh = document.getElementById('refresh-btn');
+    refresh.onclick = (e =>{
+        framework.components.forEach(entry => {
+            if (curComponent.innerHTML == entry.name){
+                editor.session.setValue(entry.code)
+                display.postMessage({'action': 'refresh', 'code': editor.session.getValue()})
+            }
+        })
+        display.postMessage({'action': 'render', 'code': editor.session.getValue()})
+
+    })
+}
+
 function generate(framework){
 
     display.postMessage({'action': 'switch', 'javascript': framework.javascript, 'css': framework.css, 'resources': framework.resources})
     collection.innerHTML = ''
     editor.session.setValue('')
+    addbtn.style = 'width: 20%; visibility: hidden;'
+    componentName.style = 'width: 75%; visibility: hidden;'
 
     framework.components.forEach(component =>{
-        console.log(component.name)
         let li = document.createElement('li');
         li.appendChild(document.createTextNode(component.name));
         li.className = 'collection-item component'
@@ -109,9 +199,10 @@ function updateDropdown(frameworks, type){
     else{
         frameworkdropdown.innerHTML = '';
     }
-    
+
     frameworks.forEach(framework => {
         let data = fs.readFileSync(framework)
+        
         let component = JSON.parse(data);
  
         let li = document.createElement('li');
@@ -122,7 +213,12 @@ function updateDropdown(frameworks, type){
         li.appendChild(a);
         li.className = 'collection-item'
         li.onclick = (e =>{
-            generate(component)
+            if(type == 'customs'){
+                generateCustom(component, framework)
+            }
+            else{
+                generate(component)
+            }
         })
         let divider = document.createElement('li');
         divider.className = 'divider';

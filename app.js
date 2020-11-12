@@ -27,6 +27,7 @@ ipcMain.on('openmodal', (e)=>{
 
 ipcMain.on('closemodal', (e)=>{
   modal.close();
+  mainWindow.webContents.send('refresh')
 })
 
 

@@ -6,14 +6,16 @@ const submit = document.getElementById('subbtn');
 
 let data = {
     name: null,
+    javascript: null,
     css: null,
-    js: null
+    resources: [],
+    components: []
 }
 
 submit.onclick = () =>{
     data.name = document.getElementById('name').value;
     data.css = document.getElementById('css').value;
-    data.js = document.getElementById('js').value;
+    data.javascript = document.getElementById('js').value;
 
     let dirname = './custom/' + data.name;
     fs.mkdir(dirname, (err) => {
@@ -22,8 +24,14 @@ submit.onclick = () =>{
     fs.copyFile(data.css, dirname+'/'+data.css, (err) => {
         console.log(err);
     })
-    fs.copyFile(data.js, dirname+'/'+data.js, (err) => {
+    fs.copyFile(data.javascript, dirname+'/'+data.javascript, (err) => {
         console.log(err);
     })
+
+    let json = JSON.stringify(data);
+    fs.writeFile(dirname+'/'+data.name+'.json', json, (err) => {
+        console.log(err);
+    })
+
     ipcRenderer.send('closemodal');
 }
