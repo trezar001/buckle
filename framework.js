@@ -28,6 +28,9 @@ window.addEventListener("message", (event) => {
             resources.appendChild(item)
         })
     }
+    else if (event.data.action == 'refresh'){
+        output.innerHTML = '';
+    }
     else{
         output.innerHTML = event.data.code;
     }

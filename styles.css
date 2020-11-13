@@ -7,3 +7,15 @@
 .component:active{
     background-color: #e0e0e0;
 }
+body {
+    overflow: hidden; /* Hide scrollbars */
+  }
+.clicked {
+    border: 2px;
+    border-color: black;
+}
+
+.topbarsearch {
+    border-radius: 10px;
+    margin-top: 10px;
+}

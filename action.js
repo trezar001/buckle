@@ -50,8 +50,6 @@ editor.setOptions({
 editor.session.setMode("ace/mode/html");
 editor.resize()
 
-components = document.querySelectorAll('.component')
-
 let dropdowns = document.querySelectorAll('.dropdown-trigger')
 for (let i = 0; i < dropdowns.length; i++){
     M.Dropdown.init(dropdowns[i]);
@@ -98,8 +96,15 @@ function generateCustom(framework, path){
         li.appendChild(document.createTextNode(component.name));
         li.className = 'collection-item component'
         li.onclick = (e =>{
+            components = document.querySelectorAll('.component')
+            components.forEach(item => {
+                item.className = 'collection-item component'
+            })
+            add = document.querySelector('.addbtn')
+            add.className = 'collection-item addbtn center teal-text text-lighten-2'
             addbtn.style = 'width: 20%; visibility: hidden;'
             componentName.style = 'width: 75%; visibility: hidden;'
+            li.className = 'collection-item component active'
             curComponent = li;
             editor.session.setValue(component.code)
             display.postMessage({'action': 'render', 'code': editor.session.getValue()})
@@ -113,8 +118,15 @@ function generateCustom(framework, path){
     icon.style = 'font-size: 16px';
     icon.appendChild(document.createTextNode('add'));
     li.appendChild(icon)
-    li.className = 'collection-item component center teal-text text-lighten-2'
+    li.className = 'collection-item addbtn center teal-text text-lighten-2'
     li.onclick = (e =>{
+        display.postMessage({'action': 'refresh'})
+
+        components = document.querySelectorAll('.component')
+        components.forEach(item => {
+            item.className = 'collection-item component'
+        })
+        li.className = 'collection-item addbtn center white-text active'
         editor.session.setValue('')
         addbtn.style = 'width: 20%; visibility: visible;'
         componentName.style = 'width: 75%; visibility: visible;'
