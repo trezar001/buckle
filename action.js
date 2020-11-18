@@ -3,7 +3,9 @@ let frameworkname = document.getElementById('framework-name')
 let customdropdown = document.getElementById('customdropdown')
 let centerbtns = document.getElementById('centerbtns')
 let homebtns = document.getElementById('homebtns')
+let enlargebtn = document.getElementById('enlarge-btn')
 let myconsole = document.getElementById('console')
+let deletesection = document.getElementById('delete-section')
 
 const electron = require('electron')
 const {ipcRenderer} = electron;
@@ -23,6 +25,7 @@ let curComponent = null
 let origframeworks = [];
 let customframeworks = [];
 
+fs.writeFileSync('./temp.html', fs.readFileSync('./framework.html', 'utf-8'))
 
 fs.readdirSync('./frameworks').forEach(file => {
         let path = './frameworks/' + file
@@ -61,9 +64,19 @@ custombtn.onclick = ()=> {
     ipcRenderer.send('openmodal');
 }
 
-ipcRenderer.on('refresh', () => {
+enlargebtn.onclick = (e => {
+    ipcRenderer.send('enlarge')
+})
+window.addEventListener("message", (event) => {
+    console.log(event.data.doc)
+    fs.writeFileSync('./temp.html', event.data.doc)
+})
+
+ipcRenderer.on('refresh', (e, data) => {
     refreshCustoms()
     updateDropdown(customframeworks, 'customs')
+    let log = "A new framework named \"" + data.name + "\" has been successfully created. Files are located in \"/custom/" + data.name + "\""
+    logmsg(log)
 })
 
 function refreshCustoms(){
@@ -86,6 +99,25 @@ function generateCustom(framework, path){
     let js = dir+'/'+framework.javascript
     let css = dir+'/'+framework.css
     let resources = framework.resources
+
+    deletesection.innerHTML = '---<i class="material-icons delete-framework waves-effect waves-light" id="delete-framework" style="font-size: 27px">delete</i>---'
+
+    let deleteframework = document.getElementById('delete-framework')
+    deleteframework.onclick = (e => {
+        collection.innerHTML = ''
+        homebtns.innerHTML = ''
+        editor.session.setValue('')
+        deletesection.innerHTML = '-------'
+
+        display.postMessage({'action': 'render', 'code': editor.session.getValue()})
+        fs.rmdirSync(dir, {recursive: true})
+
+        refreshCustoms()
+        updateDropdown(customframeworks, 'customs')
+
+        let log = "Framework \"" + framework.name + "\" has been deleted!"
+        logmsg(log)
+    })
 
     frameworkname.innerHTML = '<b>Current Framework: </b><em>' + framework.name + '</em>'
 
@@ -132,7 +164,7 @@ function generateCustom(framework, path){
     icon.style = 'font-size: 16px';
     icon.appendChild(document.createTextNode('add'));
     li.appendChild(icon)
-    li.className = 'collection-item add-component savebutton addbtn center'
+    li.className = 'collection-item add-component addbtn center'
     li.onclick = (e =>{
         centerbtns.innerHTML = ''
         myconsole.innerHTML = ''
@@ -147,7 +179,7 @@ function generateCustom(framework, path){
         components.forEach(item => {
             item.className = 'collection-item component'
         })
-        li.className = 'collection-item add-component savebutton addbtn center'
+        li.className = 'collection-item add-component active addbtn center'
         editor.session.setValue('')
         addbtn.style = 'width: 100%; visibility: visible;'
         componentName.style = 'width: 75%; visibility: visible;'
@@ -200,6 +232,8 @@ function generate(framework){
 
     centerbtns.innerHTML = ''
     homebtns.innerHTML = ''
+
+    deletesection.innerHTML = '-------'
 
     frameworkname.innerHTML = '<b>Current Framework: </b><em>' + framework.name + '</em>'
 

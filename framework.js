@@ -3,32 +3,40 @@ let javascript =  document.getElementById('javascript')
 let css = document.getElementById('css')
 let output = document.getElementById('component-output')
 let resources = document.getElementById("head")
+let scripts = document.getElementById("scripts")
 
 
 window.addEventListener("message", (event) => {
     // if (event.origin !== "http://example.org:8080")
     //   return;
     if (event.data.action == 'switch'){
-        javascript.src = event.data.javascript
-        css.href = event.data.css
+
         output.innerHTML = '';
-        let trash = document.querySelectorAll(".temp")
+        let trash = document.querySelectorAll(".tempcss")
         trash.forEach(child => {
             resources.removeChild(child)
         })
- 
+        trash = document.querySelectorAll(".tempscript")
+        trash.forEach(child => {
+            scripts.removeChild(child)
+        })
+         
         event.data.resources.forEach(resource => {
-            let item = document.createElement(resource.type)
-            if(resource.type == "link"){
+            if(resource.type == "css"){
+                let item = document.createElement('link')
                 item.href = resource.href
-                item.rel = resource.rel
+                item.rel = "stylesheet"
+                item.className = 'tempcss'    
+                resources.appendChild(item)
             }
             if(resource.type == "script"){
+                let item = document.createElement('script')
+                item.type = 'text/javascript'
                 item.src = resource.src
+                item.className = 'tempscript'    
+                scripts.appendChild(item)
             }
 
-            item.className = 'temp'    
-            resources.appendChild(item)
         })
     }
     else if (event.data.action == 'refresh'){
@@ -41,6 +49,12 @@ window.addEventListener("message", (event) => {
     }
     else if (event.data.action == 'render'){
         output.innerHTML = event.data.code;
+
+        let doc = ('<html lang="en">\n')
+        doc += (document.getElementById('document').innerHTML)
+        doc += '\n</html>'
+
+        event.source.postMessage({'doc': doc})
     }
   }, false);
 

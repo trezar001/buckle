@@ -25,9 +25,13 @@ ipcMain.on('openmodal', (e)=>{
   openModal();
 })
 
-ipcMain.on('closemodal', (e)=>{
+ipcMain.on('closemodal', (e, data)=>{
   modal.close();
-  mainWindow.webContents.send('refresh')
+  mainWindow.webContents.send('refresh', data)
+})
+
+ipcMain.on('enlarge', (e)=>{
+  enlarge();
 })
 
 
@@ -45,6 +49,20 @@ function openModal() {
   });
 
   modal.loadFile('custom.html')
+}
+
+function enlarge() {
+  modal = new BrowserWindow({
+    width: 720,
+    height: 480,
+    resizable: true,
+    parent: mainWindow,
+    webPreferences: {
+      nodeIntegration: true
+    },
+  });
+
+  modal.loadFile('temp.html')
 }
 
 

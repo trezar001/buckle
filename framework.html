@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="document">
 <head id="head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Compiled and minified CSS -->
-    <link id="css" rel="stylesheet" href="">
-    <!-- Compiled and minified JavaScript -->
-    <script id="javascript" src=""></script>
     <!--Additional Stuff-->
-    <title>Document</title>
+    <title>Component View</title>
 </head>
 <body style="background-color: white;">
     <div id="component-output" class="center"></div>
+    <!-- My JavaScript -->
+    <script>if (typeof module === 'object') {
+        window.module = module; module = undefined;
+    }
+    </script>
+    <section id="scripts" class="temp"></section>
+    <script>if (window.module) module = window.module;</script>
     <script src=framework.js></script>
-
 </body>
 
 </html>

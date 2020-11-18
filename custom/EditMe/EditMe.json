@@ -1,0 +1,1 @@
+{"name":"EditMe","resources":[{"type":"css","href":"./custom/EditMe/styles.css"}],"components":[{"name":"Circle","code":"<div class=\"circle green\"></div>\n<div class=\"circle red\"></div>\n<div class=\"circle blue\"></div>"},{"name":"Header","code":"<h1 class=\"myheader\">\n    Hello There!\n</h1>"}]}

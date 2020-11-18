@@ -1,1 +1,0 @@
-{"name":"testing","javascript":"action.js","css":"styles.css","resources":[],"components":[{"name":"Footer","code":"<div class=\"myfooter\">\n    stuff\n</div>"},{"name":"test","code":"<div id=\"here\">\n    \n</div>"},{"name":"new","code":"<h1>hello there</h1>"}]}

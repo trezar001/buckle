@@ -1,8 +1,9 @@
 {   
     "name": "bulma",
-    "javascript": "",
-    "css": "https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css",
-    "resources": [{"type": "script", "src": "https://use.fontawesome.com/ecd8d9e596.js"}],
+    "resources": [
+        {"type": "script", "src": "https://use.fontawesome.com/ecd8d9e596.js"},
+        {"type": "css", "href": "https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"}
+    ],
     "components": [
         {
             "name": "Breadcrumbs",

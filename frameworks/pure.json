@@ -1,8 +1,8 @@
 {   
     "name": "pure",
-    "javascript": "",
-    "css": "https://unpkg.com/purecss@2.0.3/build/pure-min.css",
-    "resources": [],
+    "resources": [
+        {"type": "css", "href": "https://unpkg.com/purecss@2.0.3/build/pure-min.css"}
+    ],
     "components": [
         {
             "name": "Aligned Form",

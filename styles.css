@@ -16,7 +16,17 @@
 }
 .add-component:active{
     background-color: #e0e0e0;
-    color: white;
+}
+
+.delete-framework {
+    text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+    cursor:pointer;
+}
+.delete-framework:hover{
+    color: red;
+}
+.delete-framework:active{
+    color: red;
 }
 
 body {

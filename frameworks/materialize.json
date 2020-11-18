@@ -1,8 +1,10 @@
 { 
     "name": "materialize",  
-    "javascript": "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js",
-    "css": "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css",
-    "resources": [{"type": "link", "href": "https://fonts.googleapis.com/icon?family=Material+Icons", "rel": "stylesheet"}],
+    "resources": [
+        {"type": "script", "src": "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"},
+        {"type": "css", "href": "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"},
+        {"type": "css", "href": "https://fonts.googleapis.com/icon?family=Material+Icons"}
+    ],
     "components": [
         {
             "name": "Badges",

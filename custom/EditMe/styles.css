@@ -1,0 +1,28 @@
+.myheader {
+    color: red;
+    background-color: yellow;
+    width: 100%;
+    text-align: center;
+}
+
+.circle {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
+
+.blue {
+    background-color: blue;
+}
+
+body{
+    background-color: white !important;
+}
