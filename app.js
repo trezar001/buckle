@@ -9,9 +9,9 @@ let modal;
 app.on('ready',function(){
 
     mainWindow = new BrowserWindow({
-        width: 1080,
-        height: 720,
-        resizable: false,
+        minWidth: 1080,
+        minHeight: 720,
+        resizable: true,
         webPreferences: {
           nodeIntegration: true
         }

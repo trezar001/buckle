@@ -10,9 +10,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>Add Custom Framework</title>
 </head>
-<body>
+<body style="overflow-y: hidden;">
     <form action="#">
         <div class="row">
             <div class="input-field col s10 offset-s1">
@@ -23,7 +24,7 @@
         <div class="row">
             <div class="input-field col s10 offset-s1">
                 <div class="file-field input-field">
-                    <div class="btn">
+                    <div class="btn mybutton">
                       <span>File</span>
                       <input type="file">
                     </div>
@@ -36,7 +37,7 @@
         <div class="row">
             <div class="input-field col s10 offset-s1">
                 <div class="file-field input-field">
-                    <div class="btn">
+                    <div class="btn mybutton">
                       <span>File</span>
                       <input type="file">
                     </div>
@@ -47,7 +48,7 @@
             </div>
         </div>
         <div class="row center">
-            <button id="subbtn" class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <button id="subbtn" class="btn waves-effect waves-light mybutton" type="submit" name="action">Submit
                 <i class="material-icons right">send</i>
             </button>
         </div>

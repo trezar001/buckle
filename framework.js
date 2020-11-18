@@ -23,6 +23,9 @@ window.addEventListener("message", (event) => {
                 item.href = resource.href
                 item.rel = resource.rel
             }
+            if(resource.type == "script"){
+                item.src = resource.src
+            }
 
             item.className = 'temp'    
             resources.appendChild(item)
@@ -31,7 +34,12 @@ window.addEventListener("message", (event) => {
     else if (event.data.action == 'refresh'){
         output.innerHTML = '';
     }
-    else{
+    else if (event.data.action == 'log'){
+        let text = document.createElement('p')
+        text.innerHTML = event.data.log
+        output.appendChild(text)
+    }
+    else if (event.data.action == 'render'){
         output.innerHTML = event.data.code;
     }
   }, false);

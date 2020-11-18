@@ -21,22 +21,24 @@
             height: 50%;
         }
     </style>
-    <title>Document</title>
+    <title>Buckle: CSS Framework Development Tool</title>
 </head>
 
-<body>
-    <div style="height: 10vh; margin-bottom: 0;">
+<body style=" background-color: #F7F7FF">
+    <div style="height: 70px; margin-bottom: 0;">
             <ul id="frameworkdropdown" class="dropdown-content">
             </ul>
             <ul id="customdropdown" class="dropdown-content">
             </ul>
             <nav  style="height: 100%;">
-                <div class="nav-wrapper deep-purple lighten-3">
+                <div class="nav-wrapper myheader">
 
-                    <a href="#!" class="brand-logo" style="margin-left: 3vw;">Buckle</a>
+                    <a href="#!" class="brand-logo" id= "framework-name" style="margin-left: 3vw;">
+                        <b>Current Framework: </b>
+                    </a>
 
                     <ul class="right hide-on-med-and-down">
-                        <li style="width: 40vw; margin-right: 5.5vw;">
+                        <!-- <li style="width: 40vw; margin-right: 5.5vw;">
 
                             <div class="row" id="topbarsearch" style="margin: 0; height: 6vh;">
                                 <div class="input-field col s12 white-text topbarsearch">
@@ -45,7 +47,7 @@
                                 </div>
                             </div>
  
-                        </li>
+                        </li> -->
                         <li><a href="#" id="create-custom">Create Custom</a></li>
                         <li><a class="dropdown-trigger" href="#!" data-target="customdropdown">Customs<i
                             class="material-icons right">arrow_drop_down</i></a></li>
@@ -58,31 +60,58 @@
             </nav>
         </div>
         
-        <div class="row" style="height: 90vh">
+        <div class="row" style="height: 75vh; margin-bottom: 0px;">
             <!-- This is where the CSS framework component list goes -->
-            <div class="col s2 blue lighten-4" style="height: 100%">
-                <ul class="collection" id="collection">
+            <div class="col s2" style="height: 100%; background-color: black">
+                <!-- <div class="row">
+                    <div class="col s2">
+                        <h4 class="center" style="padding-bottom: 13%; color: #F7F7FF"><i class="material-icons left">search</i></h4>
+                    </div>
+                    <div class="col s10">
+                        <input type="text" style="color:white">
+                    </div>
+                </div> -->
+                <h4 class="center" style="padding-bottom: 5%; color: #279AF1">-------</h4>
+                <ul class="collection" id="collection" style="overflow-y: auto; height: 75%; background-color: #60656F;">
                 </ul>
             </div>
             <!-- This is where the code for the selected component goes -->
-            <div class="col s5 blue lighten-5" style="height: 100%">
-                <h4 class="grey-text lighten-2 center" style="padding-bottom: 5%">Code</h4>
-                <section id="editor">
+            <div class="col s5 " style="height: 100%;  padding-bottom: 12vh;">
+                <h4 class="center" style="padding-bottom: 5%; color: #279AF1">Code</h4>
+                <section id="editor" style="height: 85%">
                 </section>
-                <section style="margin-top: 5%;" class="center">
-                    <input style="width: 75%; visibility: hidden;" class="input-field" id="component-name" placeholder="Enter the component name here">
-                    <a style="width: 20%; visibility: hidden;" class="waves-effect waves-light btn-large" id="add-btn"><i class="material-icons" style="font-size: 27px">check</i></a>
-                </section>
-                <section style="margin-top: 5%;" class="center">
+                <!-- <section style="margin-top: 5%;" class="center">
                     <a style="width: 75%" class="waves-effect waves-light btn-large" id="render-btn">Render</a>
                     <a style="width: 20%;" class="waves-effect waves-light btn-large" id="refresh-btn"><i class="material-icons" style="font-size: 27px">refresh</i></a>
-                </section>
+                </section> -->
             </div>
             <!-- This is where the visuals for the selected component goes -->
-            <div class="col s5 blue lighten-4 center" style="height: 100%">
-                <h4 class="grey-text lighten-2 center" style="padding-bottom: 5%">Output</h4>
-                <iframe src="framework.html" id="framework" name="myFrame" class="" style="width: 90%; height: 75%;"></iframe>
+            <div class="col s5 center" style="height: 100%;  padding-bottom: 12vh;">
+                <h4 class="center" style="padding-bottom: 5%; color: #279AF1">Output</h4>
+                <iframe src="framework.html" id="framework" name="myFrame" class="" style="width: 90%; height: 85%;"></iframe>
             </div>
+        </div>
+        <div class="row consolediv">
+            <div class="col s12 console valign-wrapper" id="console">               
+            </div>
+        </div>
+        <div class="row myfooter center" style="background-color: #279AF1">
+            <div class="valign-wrapper" style="height:100%"> 
+                <div class="col s2 valign-wrapper" id="homebtns">
+
+                </div>
+                <div class="col s5 valign-wrapper" id="centerbtns">
+
+                </div>
+                <div class="col s5 valign-wrapper">
+                    <div class="col s9">
+                        <a style="width: 100%;" class="waves-effect waves-light btn-large mybutton" id="render-btn">Render</a>
+                    </div>
+                    <div class="col s3">
+                        <a style="width: 100%" class="waves-effect waves-light btn-large mybutton" id="refresh-btn"><i class="material-icons" style="font-size: 27px">refresh</i></a>
+                    </div>     
+                </div>
+            </div>        
         </div>
         <!-- Our own javascript files will go here -->
         <script src=action.js></script>

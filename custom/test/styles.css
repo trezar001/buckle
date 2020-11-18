@@ -1,9 +1,0 @@
-.component {
-    cursor: pointer;
-}
-.component:hover{
-    background-color: #eeeeee;
-}
-.component:active{
-    background-color: #e0e0e0;
-}

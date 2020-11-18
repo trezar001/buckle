@@ -1,7 +1,9 @@
 let frameworkdropdown = document.getElementById('frameworkdropdown')
+let frameworkname = document.getElementById('framework-name')
 let customdropdown = document.getElementById('customdropdown')
-let componentName = document.getElementById('component-name')
-let addbtn = document.getElementById('add-btn')
+let centerbtns = document.getElementById('centerbtns')
+let homebtns = document.getElementById('homebtns')
+let myconsole = document.getElementById('console')
 
 const electron = require('electron')
 const {ipcRenderer} = electron;
@@ -85,30 +87,42 @@ function generateCustom(framework, path){
     let css = dir+'/'+framework.css
     let resources = framework.resources
 
+    frameworkname.innerHTML = '<b>Current Framework: </b><em>' + framework.name + '</em>'
+
     display.postMessage({'action': 'switch', 'javascript': js, 'css': css, 'resources': resources})
     collection.innerHTML = ''
-    addbtn.style = 'width: 20%; visibility: hidden;'
-    componentName.style = 'width: 75%; visibility: hidden;'
+
+    editor.session.setMode("ace/mode/html");
     editor.session.setValue('')
+
+    homebtns.innerHTML = ''
+    addFiles()
+
+    let filesbtn = document.getElementById('files-btn')
+    filesbtn.onclick = (e => {
+        editor.session.setValue('')
+        display.postMessage({'action': 'render', 'code': editor.session.getValue()})
+        generateFiles(dir)
+        let log = 'Switched to file view.'
+        logmsg(log)
+    })
+
+    let homebtn = document.getElementById('home-btn')
+    homebtn.onclick = (e => {
+        centerbtns.innerHTML = ''
+        editor.session.setValue('')
+        newframework = JSON.parse(fs.readFileSync(path))
+        generateCustom(newframework, path)
+        let log = 'Switched to component view.'
+        logmsg(log)
+    })
 
     framework.components.forEach(component =>{
         let li = document.createElement('li');
         li.appendChild(document.createTextNode(component.name));
         li.className = 'collection-item component'
-        li.onclick = (e =>{
-            components = document.querySelectorAll('.component')
-            components.forEach(item => {
-                item.className = 'collection-item component'
-            })
-            add = document.querySelector('.addbtn')
-            add.className = 'collection-item addbtn center teal-text text-lighten-2'
-            addbtn.style = 'width: 20%; visibility: hidden;'
-            componentName.style = 'width: 75%; visibility: hidden;'
-            li.className = 'collection-item component active'
-            curComponent = li;
-            editor.session.setValue(component.code)
-            display.postMessage({'action': 'render', 'code': editor.session.getValue()})
-        })
+        buttonpress(li, component.code, path)
+            
         collection.appendChild(li)
     }) 
 
@@ -118,17 +132,24 @@ function generateCustom(framework, path){
     icon.style = 'font-size: 16px';
     icon.appendChild(document.createTextNode('add'));
     li.appendChild(icon)
-    li.className = 'collection-item addbtn center teal-text text-lighten-2'
+    li.className = 'collection-item add-component savebutton addbtn center'
     li.onclick = (e =>{
+        centerbtns.innerHTML = ''
+        myconsole.innerHTML = ''
+
+        updatecenter();
+        let addbtn = document.getElementById('add-btn')
+        let componentName = document.getElementById('component-name')
+
         display.postMessage({'action': 'refresh'})
 
         components = document.querySelectorAll('.component')
         components.forEach(item => {
             item.className = 'collection-item component'
         })
-        li.className = 'collection-item addbtn center white-text active'
+        li.className = 'collection-item add-component savebutton addbtn center'
         editor.session.setValue('')
-        addbtn.style = 'width: 20%; visibility: visible;'
+        addbtn.style = 'width: 100%; visibility: visible;'
         componentName.style = 'width: 75%; visibility: visible;'
         addbtn.onclick = (e =>{
             let data = fs.readFileSync(path)
@@ -143,6 +164,11 @@ function generateCustom(framework, path){
             refreshCustoms()
             updateDropdown(customframeworks, 'customs')
             generateCustom(fw, path)
+            centerbtns.innerHTML = ''
+
+            let log = 'A new component by the name of \"' + component.name + "\" has been added to the framework \"" + framework.name + "\"."
+            logmsg(log)
+
         })
     })
     collection.appendChild(li)
@@ -169,16 +195,28 @@ function generate(framework){
 
     display.postMessage({'action': 'switch', 'javascript': framework.javascript, 'css': framework.css, 'resources': framework.resources})
     collection.innerHTML = ''
+    editor.session.setMode("ace/mode/html");
     editor.session.setValue('')
-    addbtn.style = 'width: 20%; visibility: hidden;'
-    componentName.style = 'width: 75%; visibility: hidden;'
+
+    centerbtns.innerHTML = ''
+    homebtns.innerHTML = ''
+
+    frameworkname.innerHTML = '<b>Current Framework: </b><em>' + framework.name + '</em>'
 
     framework.components.forEach(component =>{
+
         let li = document.createElement('li');
         li.appendChild(document.createTextNode(component.name));
         li.className = 'collection-item component'
         li.onclick = (e =>{
+            let log = 'Now editing component \"' + component.name + '\".'
+            logmsg(log)
             //let description = document.getElementById('component-description')
+            components = document.querySelectorAll('.component')
+            components.forEach(item => {
+                item.className = 'collection-item component'
+            })
+            li.className = 'collection-item component active'
             curComponent = li;
             editor.session.setValue(component.code)
             display.postMessage({'action': 'render', 'code': editor.session.getValue()})
@@ -225,6 +263,9 @@ function updateDropdown(frameworks, type){
         li.appendChild(a);
         li.className = 'collection-item'
         li.onclick = (e =>{
+            let log = 'Switching to framework \"' + component.name + '\".'
+            logmsg(log)
+
             if(type == 'customs'){
                 generateCustom(component, framework)
             }
@@ -244,5 +285,286 @@ function updateDropdown(frameworks, type){
         }
     })
 }
+
+function updatecenter(){
+    let div1 = document.createElement('div')
+    let div2 = document.createElement('div')
+
+    let btn = document.createElement('a')
+
+    let input = document.createElement('input')
+    let icon = document.createElement('i')
+
+    div2.className = 'col s3'
+    div1.className = 'input-field col s9 myinput'
+
+    input.className = 'input-field myinput'
+    input.id = 'component-name'
+    input.placeholder = 'Name'
+
+    btn.style = 'width: 100%'
+    btn.className = 'waves-effect waves-light savebutton btn-large'
+    btn.id = 'add-btn'
+    icon.className = 'material-icons'
+    icon.style = 'font-size: 27px'
+    icon.innerHTML = 'check'
+
+    div1.appendChild(input)
+    
+    btn.appendChild(icon)
+    div2.appendChild(btn)
+    
+    centerbtns.appendChild(div1)
+    centerbtns.appendChild(div2)
+
+}
+
+function addSave(){
+    let div1 = document.createElement('div')
+    let div2 = document.createElement('div')
+
+    let btn1 = document.createElement('a')
+    let btn2 = document.createElement('a')
+
+    let icon = document.createElement('i')
+
+    div1.className = 'col s9'
+    div2.className = 'col s3'
+
+    btn1.style = 'width: 100%'
+    btn1.className = 'waves-effect waves-light savebutton mybutton btn-large'
+    btn1.id = 'save-btn'
+    btn1.innerHTML = 'Save'
+
+    btn2.style = 'width: 100%'
+    btn2.className = 'waves-effect waves-light delbutton btn-large'
+    btn2.id = 'delete-btn'
+    icon.className = 'material-icons'
+    icon.style = 'font-size: 27px'
+    icon.innerHTML = 'delete'
+
+    div1.appendChild(btn1)
+    
+    btn2.appendChild(icon)
+    div2.appendChild(btn2)
+    
+    centerbtns.appendChild(div1)
+    centerbtns.appendChild(div2)
+
+}
+
+function addFiles(){
+    let div1 = document.createElement('div')
+    let div2 = document.createElement('div')
+
+    let btn1 = document.createElement('a')
+    let btn2 = document.createElement('a')
+
+    let icon = document.createElement('i')
+
+    div1.className = 'col s6'
+    div2.className = 'col s6'
+
+    btn1.style = 'width: 100%'
+    btn1.className = 'waves-effect waves-light btn-large mybutton'
+    btn1.id = 'home-btn'
+    icon.className = 'material-icons'
+    icon.style = 'font-size: 27px'
+    icon.innerHTML = 'home'
+
+    btn2.style = 'width: 100%'
+    btn2.className = 'waves-effect waves-light btn-large mybutton'
+    btn2.id = 'files-btn'
+    btn2.innerHTML = 'Files'
+
+    btn1.appendChild(icon)
+    div1.appendChild(btn1)
+    
+    div2.appendChild(btn2)
+    
+    homebtns.appendChild(div1)
+    homebtns.appendChild(div2)
+
+}
+
+// div class="col s1">
+// <a style="width: 100%" class="waves-effect waves-light btn-large  deep-purple lighten-2" id="home-btn"><i class="material-icons" style="font-size: 27px">home</i></a>
+// </div>  
+// <div class="col s1">
+// <a style="width: 100%" class="waves-effect waves-light btn-large deep-purple lighten-2" id="files-btn">Files</a>
+// </div> 
+
+function generateFiles(path){
+
+    editor.session.setValue('')
+
+    centerbtns.innerHTML = ''
+
+    refreshComponents(path)
+}
+
+function refreshComponents(path){
+    collection.innerHTML = ''
+
+    fs.readdirSync(path).forEach(file => {
+        let li = document.createElement('li');
+        li.appendChild(document.createTextNode(file));
+        li.className = 'collection-item component'
+
+        
+
+        li.onclick = (e =>{
+            centerbtns.innerHTML = ''
+            myconsole.innerHTML = ''
+
+            let log = 'Now editing file \"' + li.innerHTML + '\".'
+            logmsg(log)
+
+            addSave()
+            let savebtn = document.getElementById('save-btn')
+            let deletebtn = document.getElementById('delete-btn')
+            let fullpath = path+'/'+file
+
+            let components = document.querySelectorAll('.component')
+            components.forEach(item => {
+                item.className = 'collection-item component'
+            })
+
+            li.className = 'collection-item component active'
+
+            data = fs.readFileSync(fullpath, 'utf-8')
+            
+            if(file.endsWith('.css')){
+                editor.session.setMode("ace/mode/css");
+            }
+            if(file.endsWith('.json')){
+                editor.session.setMode("ace/mode/json");
+            }
+            if(file.endsWith('.js')){
+                editor.session.setMode("ace/mode/javascript");
+            }
+            
+            editor.session.setValue(data)
+
+            savebtn.onclick = (e => {  
+                fs.writeFileSync(fullpath, editor.session.getValue())
+                updateDropdown(customframeworks, 'customs')
+
+                let log = "file \"" +fullpath+ "\" has been saved."
+                logmsg(log)
+            })
+
+            deletebtn.onclick = (e => {
+                fs.unlinkSync(fullpath)
+                let log = "file \"" +fullpath+ "\" has been deleted."
+                logmsg(log)
+
+                editor.session.setValue('')      
+                centerbtns.innerHTML = ''
+                refreshComponents(path)
+            })
+        })
+        collection.appendChild(li)
+    })   
+}
+
+function logmsg(msg){
+    myconsole.innerHTML = ''
+
+    let p = document.createElement('p')
+    let span = document.createElement('span')
+    let span2 = document.createElement('span')
+    let b = document.createElement('b')
+
+    p.className = 'text'
+    span.className = 'buckle'
+    span2.className = 'arrow'
+
+    b.innerHTML = ' buckle'
+    span.appendChild(b)
+
+    span2.innerHTML = '> '
+
+    p.appendChild(span)
+    p.appendChild(span2)
+    p.append(document.createTextNode(msg))
+
+    myconsole.appendChild(p)
+    //<p class="text"><span class="buckle"><b>buckle</b></span><span class="arrow">></span> stuff is happening</p>
+}
+
+function buttonpress(li, code, path){
+    li.onclick = (e => {
+        centerbtns.innerHTML = ''
+        myconsole.innerHTML = ''
+
+        let log = 'Now editing component \"' + li.innerHTML + '\".'
+        logmsg(log)
+
+        addSave()
+        let savebtn = document.getElementById('save-btn')
+        let deletebtn = document.getElementById('delete-btn')
+        components = document.querySelectorAll('.component')
+        components.forEach(item => {
+            item.className = 'collection-item component'
+        })
+        add = document.querySelector('.addbtn')
+        add.className = 'collection-item add-component addbtn center'
+    
+        li.className = 'collection-item component active'
+        curComponent = li;
+        editor.session.setValue(code)
+        display.postMessage({'action': 'render', 'code': editor.session.getValue()})
+    
+        savebtn.onclick = (e => {
+            let data = fs.readFileSync(path)
+            let fw = JSON.parse(data);
+    
+            let temp = {
+                'name': curComponent.innerHTML,
+                'code': editor.session.getValue()
+            }
+    
+            fw.components.forEach(component => {
+                if (component.name == temp.name){
+                    component.code = temp.code
+                }
+            })
+    
+            fs.writeFileSync(path, JSON.stringify(fw))
+    
+            editor.session.setValue(temp.code)
+            display.postMessage({'action': 'render', 'code': editor.session.getValue()})
+            updateDropdown(customframeworks, 'customs')
+    
+            let log = 'New code for the component \"' + temp.name + "\" from framework \"" + framework.name + "\" has been saved to disk."
+            
+            logmsg(log)
+            buttonpress(li, temp.code, path)
+        })
+    
+        deletebtn.onclick = (e => {
+            let data = fs.readFileSync(path)
+            let fw = JSON.parse(data);
+    
+            let temp = {
+                'name': curComponent.innerHTML,
+                'code': editor.session.getValue()
+            }
+    
+            fw.components = fw.components.filter(component => component.name != temp.name)
+    
+            fs.writeFileSync(path, JSON.stringify(fw))
+            refreshCustoms()
+            updateDropdown(customframeworks, 'customs')
+            generateCustom(fw, path)
+            centerbtns.innerHTML = ''
+            let log = 'Component by the name of \"' + temp.name + "\" has been removed from the framework \"" + framework.name + "\"."
+            logmsg(log)
+        })
+    })
+   
+}
+
 
 
