@@ -1,14 +1,15 @@
-let framework = document.getElementById('framework')
-let javascript =  document.getElementById('javascript')
-let css = document.getElementById('css')
-let output = document.getElementById('component-output')
-let resources = document.getElementById("head")
-let scripts = document.getElementById("scripts")
+//get html components
+const framework = document.getElementById('framework')
+const javascript =  document.getElementById('javascript')
+const css = document.getElementById('css')
+const output = document.getElementById('component-output')
+const resources = document.getElementById("head")
+const scripts = document.getElementById("scripts")
 
-
+//listen for requests from the main application
 window.addEventListener("message", (event) => {
-    // if (event.origin !== "http://example.org:8080")
-    //   return;
+
+    //do when switching framework
     if (event.data.action == 'switch'){
 
         output.innerHTML = '';
@@ -39,14 +40,20 @@ window.addEventListener("message", (event) => {
 
         })
     }
+
+    //do when refreshing viewport
     else if (event.data.action == 'refresh'){
         output.innerHTML = '';
     }
+
+    //do when logging console message
     else if (event.data.action == 'log'){
         let text = document.createElement('p')
         text.innerHTML = event.data.log
         output.appendChild(text)
     }
+
+    //do when rendering to viewport 
     else if (event.data.action == 'render'){
         output.innerHTML = event.data.code;
 
